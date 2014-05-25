@@ -1,0 +1,18 @@
+# Vagrantfile
+
+VAGRANTFILE_API_VERSION = "2"
+
+box = 'ubuntu/trusty64'
+hostname = 'dogebox'
+ip_prefix = '192.168.100.4'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  
+  (0..3).each do |i|
+    config.vm.define "dogebox#{i}" do |dogebox|
+      dogebox.vm.box = box
+      dogebox.vm.host_name = hostname + i.to_s
+      dogebox.vm.network :private_network, ip: ip_prefix + i.to_s
+    end
+  end
+end
