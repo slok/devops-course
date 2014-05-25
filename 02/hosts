@@ -1,0 +1,26 @@
+---
+
+
+
+# Small hack to use hosts instead of ips (like variables)
+doge0.dogebox.org ansible_ssh_host=192.168.100.40
+doge1.dogebox.org ansible_ssh_host=192.168.100.41
+doge2.dogebox.org ansible_ssh_host=192.168.100.42
+doge3.dogebox.org ansible_ssh_host=192.168.100.43
+
+[web]
+doge[0:1].dogebox.org
+
+[db]
+doge2.dogebox.org
+
+[lb]
+doge3.dogebox.org
+
+
+# This is used to asign variables based on the env (prod, stage, test, local)
+# see group_vars local
+[local:children]
+web
+db
+lb
