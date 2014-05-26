@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Taken from https://github.com/thiderman/doge
+cat /home/vagrant/doge.txt
