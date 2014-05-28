@@ -1,0 +1,34 @@
+---
+
+
+- hosts: all
+
+  sudo: true
+
+  tasks:
+  - name: Deactivate ubuntu information
+    file:
+      path: /usr/share/landscape/landscape-sysinfo.wrapper
+      mode: 0644
+
+  - name: Copy the resource
+    copy:
+      src: ./files/doge.txt
+      dest: "/home/{{ ansible_env['SUDO_USER'] }}/doge.txt"  # These are facts
+      owner: "{{ ansible_env['SUDO_USER'] }}"  # These are facts
+      group: "{{ ansible_env['SUDO_USER'] }}"  # These are facts
+      mode: 0644
+
+  - name: Create the new motd
+    copy:
+      src: ./files/30-doge
+      dest: /etc/update-motd.d/30-doge
+      owner: root
+      group: root
+      mode: 0544
+
+    notify: Update motd # Only notify when changed
+
+  handlers:
+  - name: Update motd
+    command: "run-parts /etc/update-motd.d/"
